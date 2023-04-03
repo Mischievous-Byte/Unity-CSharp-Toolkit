@@ -1,0 +1,18 @@
+{
+    "name": "MischievousByte.CSharpToolkitEditor",
+    "rootNamespace": "MischievousByte.CSharpToolkitEditor",
+    "references": [
+        "GUID:75af1fb9aa338514e96bac6da54c8507"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
