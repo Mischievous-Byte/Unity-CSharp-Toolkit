@@ -5,23 +5,20 @@ using UnityEngine;
 
 namespace MischievousByte.CSharpToolkit
 {
-    public interface IContextualAsset
-    {
-        public Type ContextType { get; }
-        public void SetContext(object context);
-    }
-
-    /*public abstract class BaseContextualAsset : ScriptableObject
+    /// <summary>
+    /// Never derive from this class directly!
+    /// </summary>
+    public abstract class BaseContextualAsset : ScriptableObject
     {
         public abstract Type ContextType { get; }
-        
-    }*/
+        public abstract void SetContext(object context);
+    }
 
-    public class ContextualAsset<T> : ScriptableObject, IContextualAsset where T : new()
+    public class ContextualAsset<T> : BaseContextualAsset where T : new()
     {
-        public Type ContextType => typeof(T);
+        public override Type ContextType => typeof(T);
         public T Context { get; set; }
 
-        public void SetContext(object context) => Context = (T)context;
+        public override void SetContext(object context) => Context = (T)context;
     }
 }

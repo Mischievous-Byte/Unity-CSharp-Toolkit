@@ -2,25 +2,18 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace MischievousByte.CSharpToolkit
 {
     [System.Serializable]
-    public class DynamicContextualAssetReference<T> : ISerializationCallbackReceiver where T : IContextualAsset
+    public struct DynamicContextualAssetReference<T> : ISerializationCallbackReceiver
     {
-        [SerializeField] private ScriptableObject value;
+        [SerializeField] private BaseContextualAsset asset;
         [SerializeReference] private object context;
-
         [SerializeField, HideInInspector] private string typeName;
 
-        public T Value => value is T x ? x : default(T);
+        public T Asset => asset is T x ? x : default(T);
         public object Context => context;
-
-        public DynamicContextualAssetReference()
-        {
-            typeName = typeof(T).FullName;
-        }
 
         public void OnAfterDeserialize()
         {
@@ -34,31 +27,22 @@ namespace MischievousByte.CSharpToolkit
 
         private void Validate()
         {
+            typeName = typeof(T).FullName;
 
-            if(value == null)
+            if(asset == null)
             {
                 context = null;
                 return;
             }
 
-            if(!(value is T x))
-            {
-                Debug.Log("Whoops");
-                return;
-            }
-            
-
-            if (context == null || context.GetType() != x.ContextType)
-                context = Activator.CreateInstance(x.ContextType);
+            if (context == null || context.GetType() != asset.ContextType)
+                context = Activator.CreateInstance(asset.ContextType);
         }
 
         public T Prepare()
         {
-            if (!(value is T x))
-                return default(T);
-
-            x.SetContext(context);
-            return x;
+            asset.SetContext(context);
+            return (T)Asset;
         }
     }
 }

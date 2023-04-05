@@ -19,20 +19,16 @@ namespace MischievousByte.CSharpToolkitEditor.Internal
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            SerializedProperty valueProperty = property.FindPropertyRelative("value");
+            SerializedProperty assetProperty = property.FindPropertyRelative("asset");
             SerializedProperty contextProperty = property.FindPropertyRelative("context");
 
             property.isExpanded = true;
 
 
-            Rect modifierPosition = position;
-            modifierPosition.height = EditorGUIUtility.singleLineHeight;
+            Rect assetPosition = position;
+            assetPosition.height = EditorGUIUtility.singleLineHeight;
 
-            //EditorGUI.BeginChangeCheck();
-            EditorGUI.PropertyField(modifierPosition, valueProperty, label);
-
-            //if (EditorGUI.EndChangeCheck())
-                //contextProperty.managedReferenceValue = Activator.CreateInstance((valueProperty.objectReferenceValue as IContextualAsset).ContextType);
+            EditorGUI.PropertyField(assetPosition, assetProperty, label);
 
             EditorGUI.PropertyField(position, contextProperty, new GUIContent(new string(' ', label.text.Length)), true);
         }

@@ -8,10 +8,10 @@ namespace MischievousByte.CSharpToolkit
     [System.Serializable]
     public struct ContextualAssetReference<A, C> : ISerializationCallbackReceiver where A : ContextualAsset<C> where C : new()
     {
-        [SerializeField] private A value;
+        [SerializeField] private A asset;
         [SerializeReference] private object context;
 
-        public A Value => value;
+        public A Asset => asset;
         public C Context => (C) context;
 
         public void OnAfterDeserialize()
@@ -32,8 +32,8 @@ namespace MischievousByte.CSharpToolkit
 
         public A Prepare()
         {
-            value.Context = (C) context;
-            return value;
+            asset.Context = (C) context;
+            return asset;
         }
     }
 }
